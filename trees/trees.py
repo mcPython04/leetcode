@@ -64,3 +64,62 @@ def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
         
         dfs(root)
         return res[0]
+        
+
+# Balanced Binary Tree (110)
+# Time: O(n)
+def isBalanced(self, root: Optional[TreeNode]) -> bool:
+        if not root:
+            return True
+        
+        # dfs through the tree
+        # keeping track of isBalanced bool and height
+        def dfs(root):
+            if not root:
+                return [True, -1]
+            
+            left, right = dfs(root.left), dfs(root.right)
+            balanced = left[0] and right[0] and abs(left[1] - right[1]) <= 1
+            
+            return [balanced, 1 + max(left[1], right[1])]
+            
+        return dfs(root)[0]
+        
+   
+# Same Tree (100)
+# Time: O(n)
+def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
+	
+	# Reached the end and return true
+        if not q and not p:
+            return True
+            
+        # Return false if values diff or one of them is null
+        if (not q or not p) or (p.val != q.val):
+            return False
+        
+        # If true continue iterating through the tree
+        return (self.isSameTree(p.left, q.left) and
+                self.isSameTree(p.right, q.right))
+                
+
+# Subtree of another tree (572)
+# Time: O(r*s)    
+def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bool:
+        
+        # Checks the edge cases
+        # If subroot is null auto return True
+        if not subRoot:
+            return True
+        
+        # If root is null auto return False
+        if not root:
+            return False
+        
+        # Run isSametree to see if subroot == root
+        if self.isSameTree(root, subRoot):
+            return True
+        
+        # Call the function with root's left and right children if not the same tree
+        return (self.isSubtree(root.left, subRoot) or
+                self.isSubtree(root.right, subRoot))
