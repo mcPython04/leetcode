@@ -123,3 +123,66 @@ def isSubtree(self, root: Optional[TreeNode], subRoot: Optional[TreeNode]) -> bo
         # Call the function with root's left and right children if not the same tree
         return (self.isSubtree(root.left, subRoot) or
                 self.isSubtree(root.right, subRoot))
+                
+
+# Lowest Common Ancestor (235)
+# Time: O(n)
+# Basic Approach: Utilize the structure of a binary search tree
+def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':
+        curr = root
+        
+        # Trying to find the split(middle value of 'p' and 'q')
+        while curr:
+            if p.val < curr.val and q.val < curr.val:
+                curr = curr.left
+
+            elif p.val > curr.val and q.val > curr.val:
+                curr = curr.right
+            
+            else:
+                return curr
+                
+
+# Binary Tree Level Order Traversal (102)
+# Time: O(n)
+# Definition of BFS (Breadth First Search)
+def levelOrder(self, root: Optional[TreeNode]) -> List[List[int]]:
+        q = deque([root])
+        res = []
+        
+        while q:
+            if not root:
+                return res
+            flag = []
+            for i in range(len(q)):
+                node = q.popleft()
+                
+                if node.left:
+                    q.append(node.left)
+                
+                if node.right:
+                    q.append(node.right)
+                flag.append(node.val)
+            
+            res.append(flag)
+        
+        return res
+        
+   
+# Validate Binary Search Tree (98)
+# Time: O(n)
+# Basic Approach: Use DFS and update left and right boundaries
+def isValidBST(self, root: Optional[TreeNode]) -> bool:
+        def dfs(node, left, right):
+            if not node:
+                return True
+            if node.val <= left:
+                return False
+            if node.val >= right:
+                return False
+            
+            return (dfs(node.left, left, node.val) and
+                    dfs(node.right, node.val, right))
+            
+                
+        return dfs(root, float("-inf"), float("inf"))
