@@ -186,3 +186,48 @@ def isValidBST(self, root: Optional[TreeNode]) -> bool:
             
                 
         return dfs(root, float("-inf"), float("inf"))
+        
+
+# Kth Smallest Element in BST (230)   
+# Time: O(n)
+# Approach: Build a queue using In-Order Traversal Technique and return the value at that index  
+def kthSmallest(self, root: Optional[TreeNode], k: int) -> int:
+        q = deque()
+        
+        def dfs(root):
+            if not root:
+                return
+            curr = root
+            
+            if curr.left:
+                dfs(curr.left)
+            
+            q.append(curr.val)
+            if curr.right:
+                dfs(curr.right)
+            
+        dfs(root)
+        return q[k - 1]
+        
+
+# Construct Binary Tree from Preorder and Inorder Traversal (105)
+# Time: O(n)
+def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        if not preorder or not inorder:
+            return None
+        root = TreeNode(preorder[0])
+        mid = inorder.index(preorder[0])
+        root.left = self.buildTree(preorder[1:mid+1], inorder[:mid])
+        root.right = self.buildTree(preorder[mid+1:], inorder[mid+1:])
+        return root
+        
+
+# Construct Binary Tree from Preorder and Inorder Traversal        
+def buildTree(self, preorder: List[int], inorder: List[int]) -> Optional[TreeNode]:
+        if not preorder or not inorder:
+            return None
+        root = TreeNode(preorder[0])
+        mid = inorder.index(preorder[0])
+        root.left = self.buildTree(preorder[1:mid+1], inorder[:mid])
+        root.right = self.buildTree(preorder[mid+1:], inorder[mid+1:])
+        return root
