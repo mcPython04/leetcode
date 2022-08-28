@@ -56,6 +56,20 @@ def twoSUm(self, nums:  List[int], target: int) -> List[int]:
 		
 		if diff in map:
 			return [map[diff], i]
+
+# Group Anagrams (49)
+# Approach: Create hash map with occurence of letters as key (whole tuple) and the word as the value. Finally, simply return the values of the hash map
+def groupAnagrams(self, strs: List[str]) -> List[List[str]]:
+        res = defaultdict(list)
+        
+        for s in strs:
+            count = [0] * 26
+            
+            for c in s:
+                count[ord(c) - ord("a")] += 1
+            res[tuple(count)].append(s)
+        
+        return res.values()
 			
 		# If not found add value and index pair into map
 		map[n] = i
