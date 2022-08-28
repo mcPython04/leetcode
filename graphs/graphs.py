@@ -42,3 +42,29 @@ def numIslands(self, grid: List[List[str]]) -> int:
                     bfs(r, c)
                     islands += 1
         return islands
+
+
+# Clone Graph (133)
+# Link: https://leetcode.com/problems/clone-graph/
+def cloneGraph(self, node: 'Node') -> 'Node':
+        
+        # hashmap to map old node to new node
+        oldToNew = {}
+        
+        def dfs(node):
+            
+            # if old node exists in hash map return the new node
+            if node in oldToNew:
+                return oldToNew[node]
+            
+            # clone new node
+            # map old to new
+            clone = Node(node.val)
+            oldToNew[node] = clone
+            
+            # append neighbors by calling dfs
+            for nei in node.neighbors:
+                clone.neighbors.append(dfs(nei))
+                
+            return clone
+        return dfs(node) if node else None
